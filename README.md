@@ -1,0 +1,2 @@
+# GNGC_Global
+GameJam
