@@ -2,13 +2,13 @@ using UnityEngine;
 using TMPro;
 public class WindowScript : MonoBehaviour
 {
+    string[] IdName =  {"Explorer", "Email", "Meawcord", "ArtInspection"};
     public int Id;
     public TMP_Text WindowText;
-    public GameObject CloseBtn; 
 
     void Start()
     {
-        WindowText.text = "Window " + Id.ToString();  
+        WindowText.text = IdName[Id];  
     }
 
     void Update()

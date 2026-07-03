@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class DesktopManager : MonoBehaviour
 {
@@ -30,16 +29,7 @@ public class DesktopManager : MonoBehaviour
 
             if(clickedObj.tag == "App")
             {
-                int clickedId = (clickedObj.GetComponent<AppScript>()).Id;
-                Debug.Log($"App id: {clickedId}");
-                for(int i = 0; i < windows.Count; i++)
-                {
-                    if(((windows[i]).GetComponent<WindowScript>()).Id == clickedId)
-                    {
-                        DirectToWindow(clickedId);
-                        return;
-                    }
-                }
+                int clickedId = (clickedObj.GetComponentInParent<AppScript>()).Id;
                 NewWindow(clickedId);
             }
 
@@ -59,33 +49,42 @@ public class DesktopManager : MonoBehaviour
         }
     }
 
-    public void DirectToWindow(int AppId)
+    public void OpenWindow(int AppId)
     {
-        
+        for(int i = 0; i < windows.Count; i++)
+        {
+            if(((windows[i]).GetComponent<WindowScript>()).Id == AppId){
+                windows[i].SetActive(true);
+            } else
+            {
+                windows[i].SetActive(false);
+            }
+        }
+    }
+
+    public void MinimizeWindow()
+    {
+
     }
 
     public void NewWindow(int AppId)
     {
-        int n = windows.Count;
-        int order = n * 3;
-        Debug.Log($"Window total: {windows.Count}");
-        Vector3 spawnPosition = new Vector3(0.5f*n, -0.5f*n, 0f);
-        GameObject newWindow = Instantiate(window, spawnPosition, Quaternion.identity);
+        Debug.Log($"Clicked app: {AppId}");
 
-        Transform[] newWindowChildrens = newWindow.GetComponentsInChildren<Transform>();
-        for(int i = 0; i < newWindowChildrens.Length; i++)
+        if(CheckOpenedWindow(AppId) == true)
         {
-            Debug.Log($"{i+1}. Child: {newWindowChildrens[i].gameObject.name}");
-            Vector3 childPos = newWindowChildrens[i].position;
-            newWindowChildrens[i].position = new Vector3(childPos.x, childPos.y, childPos.z - (1 + order));
+            OpenWindow(AppId);
+            return;
         }
-
-        // (newWindow.GetComponent<SpriteRenderer>()).sortingOrder = n;
+        Debug.Log($"Window total: {windows.Count}");
+        Vector3 spawnPosition = new Vector3(0.5f, -0.5f, 0f);
+        GameObject newWindow = Instantiate(window, spawnPosition, Quaternion.identity);
 
         WindowScript windowScript = newWindow.GetComponent<WindowScript>();
         windowScript.Id = AppId;
 
-        windows.Insert(0, newWindow);
+        windows.Add(newWindow);
+        OpenWindow(AppId);
     }
 
     public void killWindow(int AppId)
@@ -100,8 +99,19 @@ public class DesktopManager : MonoBehaviour
         }
     }
 
-//  demi kristus apaan ini anjg
-    private void updateWindowLayer()
+    private bool CheckOpenedWindow(int AppId)
+    {
+        for(int i = 0; i < windows.Count; i++)
+        {
+            if(((windows[i]).GetComponent<WindowScript>()).Id == AppId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void Shutdown()
     {
         
     }

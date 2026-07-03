@@ -8,6 +8,9 @@ TagManager:
   - Window
   - DragWindow
   - CloseWindow
+  - EventManager
+  - MinimizeWindow
+  - MaximizeWindow
   layers:
   - Default
   - TransparentFX
@@ -44,6 +47,21 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ClickableDesktopIcons
+    uniqueID: 1242217773
+    locked: 0
+  - name: WindowBackground
+    uniqueID: 2463851735
+    locked: 0
+  - name: MainWindow
+    uniqueID: 1512746349
+    locked: 0
+  - name: ClickableWindowIcons
+    uniqueID: 4188047389
+    locked: 0
+  - name: WindowTexts
+    uniqueID: 482026107
     locked: 0
   m_RenderingLayers:
   - Default
