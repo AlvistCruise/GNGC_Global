@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MeawCordScript : MonoBehaviour
@@ -7,11 +8,13 @@ public class MeawCordScript : MonoBehaviour
     // Urutannya WAJIB sama dengan ID di ProfileId!
     // Contoh: Element 0 = AlviciaRoxiesChat, Element 1 = AlanDezainChat, dst.
     public GameObject[] chatPanels;
-
+    public List<int> acceptedId;
     private InputManager inputManager;
     public ExplorerScript explorerScript;
+    public ArtInspectorScript artInspectorScript;
     void Awake()
     {
+        acceptedId = new List<int>();
         chatPanels[0].SetActive(true);
         // Pastikan semua chat panel di-assign di Inspector
         if (chatPanels.Length == 0)
@@ -27,6 +30,7 @@ public class MeawCordScript : MonoBehaviour
         // Saat Meawcord pertama kali dibuka, sembunyikan semua chat panel
         // (Atau kamu bisa set chatPanels[0] jadi true jika ingin ada chat default yang terbuka)
         // chatPanels[0].SetActive(true);
+        
         foreach (GameObject chat in chatPanels)
         {
             if (chat != null) chat.SetActive(false);
@@ -52,11 +56,27 @@ public class MeawCordScript : MonoBehaviour
             {
                 int clickedId = clickedObj.GetComponentInParent<ProfileId>().Id;
                 explorerScript.AddFile(clickedId);
+                artInspectorScript.AddFile(clickedId);
+            }
+
+            
+            if (clickedObj.CompareTag("MeawcordReject"))
+            {
+                int clickedId = clickedObj.GetComponentInParent<ProfileId>().Id;
+            }
+            
+            if (clickedObj.CompareTag("MeawcordAccept") && acceptedId.Count < 2)
+            {
+                int clickedId = clickedObj.GetComponentInParent<ProfileId>().Id;
+                if (ValidateId(clickedId))
+                {
+                    clickedObj.SetActive(false);
+                    acceptedId.Add(clickedId);
+                }
             }
         }
     }
-
-    // Fungsi ini bekerja dengan sistem yang sama persis dengan OpenWindow
+    
     public void OpenChat(int chatId)
     {
         // Loop semua chat panel: yang ID-nya sama di-True, yang lain di-False
@@ -74,5 +94,14 @@ public class MeawCordScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool ValidateId(int id)
+    {
+        foreach (int _id in acceptedId)
+        {
+            if(id == _id)return false;
+        }
+        return true;
     }
 }

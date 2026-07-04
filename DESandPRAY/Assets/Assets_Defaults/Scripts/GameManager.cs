@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private bool hasOpenedEmail = false;
     private bool hasOpenedDiscord = false;
     private bool hasOpenedExplorer = false;
+    private bool hasOpenedInspector = false;
 
     void Awake()
     {
@@ -148,5 +149,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Fungsi: Art Inspector Dibuka.");
         // Logika apa yang terjadi jika art inspector dibuka di hari tertentu
+
+        if (currentDay == 1 && !hasOpenedInspector)
+        {   
+            hasOpenedInspector = true; // Kunci
+        }
     }
 }
