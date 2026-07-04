@@ -12,6 +12,7 @@ TagManager:
   - MinimizeWindow
   - MaximizeWindow
   - DiscordProfile
+  - DownloadCV
   layers:
   - Default
   - TransparentFX

@@ -9,6 +9,7 @@ public class MeawCordScript : MonoBehaviour
     public GameObject[] chatPanels;
 
     private InputManager inputManager;
+    public ExplorerScript explorerScript;
     void Awake()
     {
         chatPanels[0].SetActive(true);
@@ -45,6 +46,12 @@ public class MeawCordScript : MonoBehaviour
                 Debug.Log($"Membuka isi chat untuk ID: {clickedId}");
                 
                 OpenChat(clickedId);
+            }
+
+            if (clickedObj.CompareTag("DownloadCV"))
+            {
+                int clickedId = clickedObj.GetComponentInParent<ProfileId>().Id;
+                explorerScript.AddFile(clickedId);
             }
         }
     }
