@@ -3,6 +3,7 @@ using UnityEngine;
 public class AppScript : MonoBehaviour
 {
     public int Id;
+    public GameObject redDotNotif;
     
     // 1. Deklarasikan variabel animator di sini
     private Animator animator; 
@@ -23,6 +24,17 @@ public class AppScript : MonoBehaviour
         else
         {
             Debug.LogWarning($"Animator belum terpasang di objek {gameObject.name}");
+        }
+    }
+
+    public void SetRedDotActive(bool status)
+    {
+        if (status)
+        {
+            redDotNotif.SetActive(true);
+        } else
+        {
+            redDotNotif.SetActive(false);
         }
     }
 }
