@@ -41,6 +41,7 @@ public class DesktopManager : MonoBehaviour
             if(clickedObj.CompareTag("App"))
             {
                 int clickedId = clickedObj.GetComponentInParent<AppScript>().Id;
+                clickedObj.GetComponentInParent<AppScript>().SetRedDotActive(false);
                 OpenWindow(clickedId);
             }
 
@@ -64,6 +65,7 @@ public class DesktopManager : MonoBehaviour
     public void OpenWindow(int AppId)
     {
         Debug.Log($"Membuka aplikasi ID: {AppId}");
+
 
         // Lapor ke GameManager
         if(GameManager.Instance != null) 
