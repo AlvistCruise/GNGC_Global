@@ -73,6 +73,9 @@ TagManager:
   - name: SubMainWindow
     uniqueID: 3505427253
     locked: 0
+  - name: Sub IMG
+    uniqueID: 4037672173
+    locked: 0
   - name: Sub InsideClick Window
     uniqueID: 2515299469
     locked: 0

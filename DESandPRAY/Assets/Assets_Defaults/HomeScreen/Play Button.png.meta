@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 2e905549d46b802409e1762fe70763b9
+guid: 002b84ca04f7ff744b5fa575d059533d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5399350616799491973
-    second: Gambar_2_0
+      213: 6055045571043105099
+    second: Play Button_0
+  - first:
+      213: -7193122088060811460
+    second: Play Button_1
+  - first:
+      213: -5400827159775662511
+    second: Play Button_2
+  - first:
+      213: 1739606179720110205
+    second: Play Button_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gambar_2_0
+      name: Play Button_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 4000
-        height: 4000
+        x: 96
+        y: 111
+        width: 2001
+        height: 1857
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +137,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 587be1c67c85eea40800000000000000
-      internalID: 5399350616799491973
+      spriteID: b4993d8add7d70450800000000000000
+      internalID: 6055045571043105099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Play Button_1
+      rect:
+        serializedVersion: 2
+        x: 1402
+        y: 1956
+        width: 20
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c378e1b5295ec2c90800000000000000
+      internalID: -7193122088060811460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Play Button_2
+      rect:
+        serializedVersion: 2
+        x: 1971
+        y: 1400
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15e2a4020586c05b0800000000000000
+      internalID: -5400827159775662511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Play Button_3
+      rect:
+        serializedVersion: 2
+        x: 1963
+        y: 348
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d70aa478a92542810800000000000000
+      internalID: 1739606179720110205
       vertices: []
       indices: 
       edges: []
@@ -148,7 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Gambar_2_0: 5399350616799491973
+      Play Button_0: 6055045571043105099
+      Play Button_1: -7193122088060811460
+      Play Button_2: -5400827159775662511
+      Play Button_3: 1739606179720110205
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

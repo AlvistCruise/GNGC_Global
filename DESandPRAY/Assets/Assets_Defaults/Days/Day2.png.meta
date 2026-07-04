@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2e905549d46b802409e1762fe70763b9
+guid: bf0ba1ce3d2673041b9c1c9f1467bcc9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5399350616799491973
-    second: Gambar_2_0
+      213: -609157439628190469
+    second: Day2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gambar_2_0
+      name: Day2_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 4000
-        height: 4000
+        x: 29
+        y: 45
+        width: 614
+        height: 331
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 587be1c67c85eea40800000000000000
-      internalID: 5399350616799491973
+      spriteID: bfcdcae3986db87f0800000000000000
+      internalID: -609157439628190469
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Gambar_2_0: 5399350616799491973
+      Day2_0: -609157439628190469
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
