@@ -11,6 +11,7 @@ TagManager:
   - EventManager
   - MinimizeWindow
   - MaximizeWindow
+  - DiscordProfile
   layers:
   - Default
   - TransparentFX
