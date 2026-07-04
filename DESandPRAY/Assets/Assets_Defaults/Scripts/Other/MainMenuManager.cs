@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement; // Wajib untuk mengatur pindah scene
 
-public class MainMenuManager : MonoBehaviour
+public class MainMenuManagera : MonoBehaviour
 {
     // Fungsi untuk tombol Start
     public void PlayGame()
