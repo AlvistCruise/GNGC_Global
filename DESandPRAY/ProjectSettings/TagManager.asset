@@ -13,6 +13,8 @@ TagManager:
   - MaximizeWindow
   - DiscordProfile
   - DownloadCV
+  - MeawcordReject
+  - MeawcordAccept
   layers:
   - Default
   - TransparentFX
@@ -76,6 +78,39 @@ TagManager:
     locked: 0
   - name: SubWindowTexts
     uniqueID: 1487510177
+    locked: 0
+  - name: New Layer 10
+    uniqueID: 3503139411
+    locked: 0
+  - name: New Layer 11
+    uniqueID: 588930417
+    locked: 0
+  - name: New Layer 12
+    uniqueID: 4119049449
+    locked: 0
+  - name: New Layer 13
+    uniqueID: 2903593029
+    locked: 0
+  - name: New Layer 14
+    uniqueID: 2038770353
+    locked: 0
+  - name: New Layer 15
+    uniqueID: 3530026953
+    locked: 0
+  - name: New Layer 16
+    uniqueID: 4035415147
+    locked: 0
+  - name: New Layer 17
+    uniqueID: 4227748995
+    locked: 0
+  - name: ArtInspectBackground
+    uniqueID: 3022474533
+    locked: 0
+  - name: ArtInspection
+    uniqueID: 1202199513
+    locked: 0
+  - name: ArtInspectionBtn
+    uniqueID: 832436361
     locked: 0
   m_RenderingLayers:
   - Default
