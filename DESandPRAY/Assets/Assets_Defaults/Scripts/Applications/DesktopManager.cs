@@ -1,118 +1,133 @@
-using System.Collections.Generic;
+// using System.Collections.Generic;
 using UnityEngine;
 
 public class DesktopManager : MonoBehaviour
 {
-    public GameObject[] apps;
-    public List<GameObject> windows;
-    public GameObject window;
-    public InputManager inputManager;
+    [Header("Window Settings")]
+    // Masukkan 4 GameObject Window dari Hierarchy ke array ini melalui Inspector.
+    // PASTIKAN URUTANNYA SESUAI ID!
+    // Element 0 = Window Explorer
+    // Element 1 = Window Email
+    // Element 2 = Window Discord
+    // Element 3 = Window ArtInspector
+    public GameObject[] windows; 
+    [Header("Objective Window Settings")]
+    // Tambahkan variabel ini untuk menyimpan referensi Window Objective
+    public GameObject objectiveWindow;
+
+    private InputManager inputManager;
 
     void Start()
     {
         inputManager = gameObject.GetComponent<InputManager>();
 
-        apps = GameObject.FindGameObjectsWithTag("App");
-        windows = new List<GameObject>();
-        for(int i = 0; i < apps.Length; i++)
+        // Saat game mulai, pastikan semua window aplikasi disembunyikan
+        foreach (GameObject win in windows)
         {
-            Debug.Log($"Apps Found: {apps[i]}");
+            if (win != null) win.SetActive(false);
         }
+        
+        // Pastikan Window Objective menyala di awal karena belum ada app yang terbuka
+        if (objectiveWindow != null) objectiveWindow.SetActive(true);
     }
 
     void Update()
     {
         if(inputManager.newClick)
         {
-            // Debug.Log($"Clicked Obj: {inputManager.clickedObj.name}");
             GameObject clickedObj = inputManager.clickedObj;
 
-            if(clickedObj.tag == "App")
+            // Buka Aplikasi
+            if(clickedObj.CompareTag("App"))
             {
-                int clickedId = (clickedObj.GetComponentInParent<AppScript>()).Id;
-                NewWindow(clickedId);
+                int clickedId = clickedObj.GetComponentInParent<AppScript>().Id;
+                OpenWindow(clickedId);
             }
 
-            if(clickedObj.tag == "DragWindow")
+            // Drag Window
+            if(clickedObj.CompareTag("DragWindow"))
             {
-                int clickedWindowId = (clickedObj.GetComponentInParent<WindowScript>()).Id;
+                int clickedWindowId = clickedObj.GetComponentInParent<WindowScript>().Id;
                 Debug.Log($"Drag window id: {clickedWindowId}");
-                
             }
 
-            if(clickedObj.tag == "CloseWindow")
+            // Tutup/Minimize Window
+            if(clickedObj.CompareTag("CloseWindow"))
             {
-                int clickedWindowId = (clickedObj.GetComponentInParent<WindowScript>()).Id;
-                Debug.Log($"Clossed App id: {clickedWindowId}");
-                killWindow(clickedWindowId);
+                int clickedWindowId = clickedObj.GetComponentInParent<WindowScript>().Id;
+                Debug.Log($"Closed App id: {clickedWindowId}");
+                MinimizeWindow(clickedWindowId);
             }
         }
     }
 
     public void OpenWindow(int AppId)
     {
-        for(int i = 0; i < windows.Count; i++)
+        Debug.Log($"Membuka aplikasi ID: {AppId}");
+
+        // Lapor ke GameManager
+        if(GameManager.Instance != null) 
         {
-            if(((windows[i]).GetComponent<WindowScript>()).Id == AppId){
-                windows[i].SetActive(true);
-            } else
+            GameManager.Instance.OnAppOpened(AppId);
+        }
+
+        // Buka app yang dipilih, tutup yang lain
+        for(int i = 0; i < windows.Length; i++)
+        {
+            if (windows[i] != null)
             {
-                windows[i].SetActive(false);
+                if (i == AppId)
+                {
+                    windows[i].SetActive(true); 
+                }
+                else
+                {
+                    windows[i].SetActive(false); 
+                }
             }
         }
+
+        // MATIKAN Window Objective karena sekarang ada aplikasi yang sedang terbuka
+        if (objectiveWindow != null) objectiveWindow.SetActive(false);
     }
 
-    public void MinimizeWindow()
+    public void MinimizeWindow(int AppId)
     {
-
-    }
-
-    public void NewWindow(int AppId)
-    {
-        Debug.Log($"Clicked app: {AppId}");
-
-        if(CheckOpenedWindow(AppId) == true)
+        // Matikan window yang sedang aktif
+        if (AppId >= 0 && AppId < windows.Length && windows[AppId] != null)
         {
-            OpenWindow(AppId);
-            return;
+            windows[AppId].SetActive(false);
         }
-        Debug.Log($"Window total: {windows.Count}");
-        Vector3 spawnPosition = new Vector3(0.5f, -0.5f, 0f);
-        GameObject newWindow = Instantiate(window, spawnPosition, Quaternion.identity);
 
-        WindowScript windowScript = newWindow.GetComponent<WindowScript>();
-        windowScript.Id = AppId;
-
-        windows.Add(newWindow);
-        OpenWindow(AppId);
-    }
-
-    public void killWindow(int AppId)
-    {
-        for(int i = 0; i < windows.Count; i++)
-        {
-            if(((windows[i]).GetComponent<WindowScript>()).Id == AppId){
-                Destroy(windows[i]);
-                windows.Remove(windows[i]);
-                return;
-            }
-        }
-    }
-
-    private bool CheckOpenedWindow(int AppId)
-    {
-        for(int i = 0; i < windows.Count; i++)
-        {
-            if(((windows[i]).GetComponent<WindowScript>()).Id == AppId)
-            {
-                return true;
-            }
-        }
-        return false;
+        // Cek apakah Window Objective harus ditampilkan kembali
+        CheckObjectiveVisibility();
     }
 
     public void Shutdown()
     {
+        // TODO: Logika saat komputer dimatikan
+    }
+
+    // --- FUNGSI BARU ---
+    // Mengecek apakah masih ada aplikasi yang terbuka di layar
+    private void CheckObjectiveVisibility()
+    {
+        if (objectiveWindow == null) return;
+
+        bool isAnyAppOpen = false;
         
+        // Cek satu per satu apakah ada window di dalam array yang statusnya sedang aktif
+        foreach (GameObject win in windows)
+        {
+            if (win != null && win.activeSelf)
+            {
+                isAnyAppOpen = true;
+                break; // Jika ketemu satu saja yang aktif, langsung stop pengecekan
+            }
+        }
+
+        // Jika isAnyAppOpen = true, maka SetActive(false)
+        // Jika isAnyAppOpen = false, maka SetActive(true)
+        objectiveWindow.SetActive(!isAnyAppOpen);
     }
 }

@@ -51,6 +51,9 @@ TagManager:
   - name: ClickableDesktopIcons
     uniqueID: 1242217773
     locked: 0
+  - name: DesktopIconsREDDOT
+    uniqueID: 2985384983
+    locked: 0
   - name: WindowBackground
     uniqueID: 2463851735
     locked: 0
@@ -62,6 +65,15 @@ TagManager:
     locked: 0
   - name: WindowTexts
     uniqueID: 482026107
+    locked: 0
+  - name: SubMainWindow
+    uniqueID: 3505427253
+    locked: 0
+  - name: Sub InsideClick Window
+    uniqueID: 2515299469
+    locked: 0
+  - name: SubWindowTexts
+    uniqueID: 1487510177
     locked: 0
   m_RenderingLayers:
   - Default
