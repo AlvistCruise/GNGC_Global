@@ -167,8 +167,8 @@ public class MeawCordScript : MonoBehaviour
         
         // Kondisi awal (Default/Blank state)
         currentIntervieweeId = -1;
-        headerCandidateName.text = "Pilih Kandidat";
-        dialogText.text = "Pilih kandidat di sebelah kiri untuk memulai interview.";
+        headerCandidateName.text = "Choose a Candidate";
+        dialogText.text = "Choose a candidate on left panel to start the interview.";
         // Opsional: headerProfileImage.sprite = defaultBlankSprite;
 
         // Loop semua tombol profil di Day 2
@@ -230,7 +230,7 @@ public class MeawCordScript : MonoBehaviour
         // Cek batasan 3 pertanyaan per kandidat
         if (questionsAskedCount[currentIntervieweeId] >= 3)
         {
-            dialogText.text = "Kamu sudah menanyakan maksimal 3 pertanyaan kepada kandidat ini.";
+            dialogText.text = "You have reached the maximum 3 number of questions for this candidate.";
             return;
         }
 

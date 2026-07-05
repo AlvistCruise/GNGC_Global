@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     [Header("Game State")]
     public int currentDay = 1;
+    // TAMBAHKAN INI: Nama scene Main Menu kamu (harus sama persis dengan yang ada di Project)
+    public string mainMenuSceneName = "MainMenu";
     [Header("App References")]
     // Tambahkan variabel ini untuk menyambungkan icon dari Hierarchy
     public AppScript emailApp;
@@ -31,6 +33,27 @@ public class GameManager : MonoBehaviour
     // TAMBAHKAN INI: Referensi ke GameObject tombol restart
     public GameObject restartButtonObject;
 
+    [Header("Objective Settings")]
+    // Tarik objek Text (TMP) dari dalam Window objective ke sini
+    public TMP_Text objectiveText; 
+
+    // Teks default untuk masing-masing hari (bisa diedit juga lewat Inspector)
+    [TextArea(3, 5)]
+    public string day1Objective = "- Open all shaking applications.\n- Follow the boss's instructions in the Email.\n\n*Hint: To proceed to the next day, click the power button in the bottom left corner.*";
+
+    [TextArea(3, 5)]
+    public string day2Objective = "- Open Meawcord.\n- Start interviewing the 2 candidates you have selected.";
+
+    [TextArea(3, 5)]
+    public string day3Objective = "- Open the Email.\n- Read the message from your boss.";
+
+    [Header("Day Indicator Settings")]
+    // Tarik objek "Day1_0" dari Hierarchy ke sini
+    public SpriteRenderer dayIndicatorRenderer; 
+    
+    // Array untuk menampung 3 gambar sprite (Day 1, Day 2, Day 3)
+    public Sprite[] daySprites;
+
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -46,9 +69,9 @@ public class GameManager : MonoBehaviour
     // ==========================================
     // PENGATUR STATE HARI
     // ==========================================
-    // 2. FUNGSI BARU UNTUK GANTI HARI
     public void AdvanceDay()
     {
+        // Jika masih Hari 1 atau 2, lanjut ke hari berikutnya
         if (currentDay < 3)
         {
             int nextDay = currentDay + 1;
@@ -57,17 +80,32 @@ public class GameManager : MonoBehaviour
             // Panggil fungsi penggantian state hari
             ChangeDayState(nextDay);
         }
-        else
+        else 
         {
-            Debug.Log("Game Selesai! Saatnya melihat hasil akhir dari bos.");
-            // TODO: Pindah ke Scene Ending
+            // Jika Shut Down ditekan pada Hari ke-3 (Game Selesai)
+            Debug.Log("Siklus 3 Hari selesai! Komputer dimatikan dan kembali ke Main Menu.");
+            
+            // Pindah (Load) kembali ke scene Main Menu
+            SceneManager.LoadScene(mainMenuSceneName);
         }
     }
+    // ==========================================
+    // PENGATUR STATE HARI
+    // ==========================================
     public void ChangeDayState(int day)
     {
         currentDay = day;
         Debug.Log($"--- MEMASUKI HARI KE-{currentDay} ---");
 
+        // --- TAMBAHKAN LOGIKA GANTI GAMBAR DI SINI ---
+        // Pastikan referensi tidak kosong dan hari sesuai dengan jumlah gambar di array
+        if (dayIndicatorRenderer != null && daySprites != null && day >= 1 && day <= daySprites.Length)
+        {
+            // Ingat: Array dimulai dari 0. Jadi Hari 1 akan memanggil daySprites[0].
+            dayIndicatorRenderer.sprite = daySprites[day - 1];
+        }
+
+        // Panggil fungsi sesuai harinya
         if (day == 1) RunDay1();
         else if (day == 2) RunDay2();
         else if (day == 3) RunDay3();
@@ -81,20 +119,25 @@ public class GameManager : MonoBehaviour
     private void RunDay1()
     {
         Debug.Log("Setup Day 1: Cek Email Bos & Review CV.");
-        if (emailApp != null) emailApp.SetShake(true);
         
-        // Pastikan Meawcord menampilkan UI Hari 1
+        // --- TAMBAHKAN BARIS INI ---
+        if (objectiveText != null) objectiveText.text = day1Objective;
+        
+        UpdateAppVisibility(true, true, true, true);
+        if (emailApp != null) emailApp.SetShake(true);
         if (meawCordManager != null) meawCordManager.UpdateDayUI(1);
+        if (restartButtonObject != null) restartButtonObject.SetActive(false); 
     }
 
     private void RunDay2()
     {
         Debug.Log("Setup Day 2: Waktunya Interview!");
         
-        // Pastikan Meawcord menampilkan UI Hari 2
+        // --- TAMBAHKAN BARIS INI ---
+        if (objectiveText != null) objectiveText.text = day2Objective;
+        
+        UpdateAppVisibility(false, false, true, false);
         if (meawCordManager != null) meawCordManager.UpdateDayUI(2);
-
-        // TODO: Bikin ikon Discord langsung bergetar di awal Hari 2 karena jadwal interview
         if (discordApp != null) discordApp.SetShake(true); 
     }
 
@@ -102,15 +145,31 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Setup Day 3: Pengumuman Hasil dari Bos.");
         
-        // Bikin icon Email langsung bergetar di awal Hari 3 untuk menarik perhatian
+        // --- TAMBAHKAN BARIS INI ---
+        if (objectiveText != null) objectiveText.text = day3Objective;
+        
+        UpdateAppVisibility(false, true, false, false);
         if (emailApp != null) emailApp.SetShake(true);
 
-        // Evaluasi hasil pilihan player
         if (meawCordManager != null)
         {
             int hiredId = meawCordManager.finalHiredId;
             EvaluateResult(hiredId);
         }
+
+        if (restartButtonObject != null) restartButtonObject.SetActive(true);
+    }
+
+    // ==========================================
+    // FUNGSI BARU: PENGATUR VISIBILITAS IKON DESKTOP
+    // ==========================================
+    private void UpdateAppVisibility(bool showExplorer, bool showEmail, bool showDiscord, bool showArtInspector)
+    {
+        // Akses gameObject dari komponen AppScript untuk mematikan/menyalakan ikonnya di Desktop
+        if (explorerApp != null) explorerApp.gameObject.SetActive(showExplorer);
+        if (emailApp != null) emailApp.gameObject.SetActive(showEmail);
+        if (discordApp != null) discordApp.gameObject.SetActive(showDiscord);
+        if (artInspectorApp != null) artInspectorApp.gameObject.SetActive(showArtInspector);
     }
     private void EvaluateResult(int hiredId)
     {
